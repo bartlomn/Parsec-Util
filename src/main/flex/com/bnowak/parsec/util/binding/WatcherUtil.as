@@ -104,9 +104,27 @@ public class WatcherUtil
    /**
     *  @private
     */
-   public static function isWatching( target:Object ):Boolean
+   public static function isWatching( target:Object, chain:Object = null, handler:Function = null ):Boolean
    {
-      return _watchers && _watchers[ target ];
+      if( target )
+      {
+         if( chain )
+         {
+            if( handler )
+            {
+               return _watchers &&
+                      _watchers[ target ] &&
+                      _watchers[ target ][ chain ] &&
+                      _watchers[ target ][ chain ][ handler ];
+            }
+            return _watchers &&
+                  _watchers[ target ] &&
+                  _watchers[ target ][ chain ];
+         }
+         return _watchers &&
+               _watchers[ target ];
+      }
+      return false;
    }
 
 }
